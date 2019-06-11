@@ -80154,6 +80154,602 @@ function __importDefault(mod) {
 }
 
 
+/***/ }),
+
+/***/ "./node_modules/xml-beautify/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/xml-beautify/index.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var XmlBeautify = __webpack_require__(/*! ./src/XmlBeautify.js */ "./node_modules/xml-beautify/src/XmlBeautify.js");
+
+module.exports = XmlBeautify;
+
+/***/ }),
+
+/***/ "./node_modules/xml-beautify/src/XmlBeautify.js":
+/*!******************************************************!*\
+  !*** ./node_modules/xml-beautify/src/XmlBeautify.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*
+ * xml-beautify - pretty-print text in XML formats.
+ *
+ * Copyright (c) 2018 Tom Misawa, riversun.org@gmail.com
+ *
+ * MIT license:
+ * http://www.opensource.org/licenses/mit-license.php
+ *
+ * Usage:
+ *
+ *       var resultXmlText = new XmlBeautify().beautify(textInput.value,
+ *       {
+ *            indent: "  ",  //indent pattern like white spaces
+ *            useSelfClosingElement: true //true:use self-closing element when empty element.
+ *       });
+ *
+ * How "useSelfClosingElement" property works.
+ *
+ *   useSelfClosingElement:true
+ *   <foo></foo> ==> <foo/>
+ *
+ *   useSelfClosingElement:false
+ *   <foo></foo> ==> <foo></foo>
+ *   
+ */
+var XmlBeautify =
+    (function () {
+        'use strict';
+
+        function XmlBeautify() {
+            this.parser = new DOMParser();
+
+        }
+
+        XmlBeautify.prototype.hasXmlDef = function (xmlText) {
+            return xmlText.indexOf('<?xml') >= 0;
+        }
+        XmlBeautify.prototype.getEncoding = function (xmlText) {
+            var me = this;
+            if (!me.hasXmlDef(xmlText)) {
+                return null;
+            }
+
+            var encodingStartPos = xmlText.toLowerCase().indexOf('encoding="') + 'encoding="'.length;
+            var encodingEndPos = xmlText.indexOf('"?>');
+            var encoding = xmlText.substr(encodingStartPos, encodingEndPos - encodingStartPos);
+            return encoding;
+        }
+        XmlBeautify.prototype.beautify = function (xmlText, data) {
+            var me = this;
+
+            var doc = me.parser.parseFromString(xmlText, "text/xml");
+
+            var indent = "  ";
+            var encoding = "UTF-8";
+            var useSelfClosingElement = false;
+
+            if (data) {
+                if (data.indent) {
+                    indent = data.indent;
+                }
+
+                if (data.useSelfClosingElement == true) {
+                    useSelfClosingElement = data.useSelfClosingElement;
+                }
+            }
+
+            var xmlHeader = null;
+
+            if (me.hasXmlDef(xmlText)) {
+                var encoding = me.getEncoding(xmlText);
+                xmlHeader = '<?xml version="1.0" encoding="' + encoding + '"?>';
+            }
+            var buildInfo = {
+                indentText: indent,
+                xmlText: "",
+                useSelfClosingElement: useSelfClosingElement,
+                indentLevel: 0
+            }
+
+
+            me._parseInternally(doc.children[0], buildInfo);
+
+            var resultXml = "";
+
+            if (xmlHeader) {
+                resultXml += xmlHeader + '\n';
+            }
+            resultXml += buildInfo.xmlText;
+
+            return resultXml;
+
+
+        };
+
+        XmlBeautify.prototype._parseInternally = function (element, buildInfo) {
+            var me = this;
+
+            var elementTextContent = element.textContent;
+
+            var blankReplacedElementContent = elementTextContent.replace(/ /g, '').replace(/\r?\n/g, '').replace(/\n/g, '').replace(/\t/g, '');
+
+            if (blankReplacedElementContent.length == 0) {
+                elementTextContent = "";
+            }
+
+            var elementHasNoChildren = !(element.children.length > 0);
+            var elementHasValueOrChildren = (elementTextContent && elementTextContent.length > 0);
+            var elementHasItsValue = elementHasNoChildren && elementHasValueOrChildren;
+            var isEmptyElement = elementHasNoChildren && !elementHasValueOrChildren;
+
+            var useSelfClosingElement = buildInfo.useSelfClosingElement;
+
+            var startTagPrefix = '<';
+            var startTagSuffix = '>';
+            var startTagSuffixEmpty = ' />';
+            var endTagPrefix = '</';
+            var endTagSuffix = '>';
+
+            var valueOfElement = '';
+
+            if (elementHasItsValue) {
+
+
+                valueOfElement = elementTextContent;
+
+
+            }
+
+            var indentText = "";
+
+            var idx;
+
+            for (idx = 0; idx < buildInfo.indentLevel; idx++) {
+                indentText += buildInfo.indentText;
+            }
+            buildInfo.xmlText += indentText;
+            buildInfo.xmlText += startTagPrefix + element.tagName
+
+            //add attributes
+            for (var i = 0; i < element.attributes.length; i++) {
+                var attr = element.attributes[i];
+                buildInfo.xmlText += ' ' + attr.name + '=' + '"' + attr.textContent + '"';
+            }
+
+            if (isEmptyElement && useSelfClosingElement) {
+                buildInfo.xmlText += startTagSuffixEmpty;
+
+            } else {
+                buildInfo.xmlText += startTagSuffix;
+            }
+
+            if (elementHasItsValue) {
+                buildInfo.xmlText += valueOfElement;
+            } else {
+
+                if (isEmptyElement && !useSelfClosingElement) {
+                } else {
+                    buildInfo.xmlText += '\n';
+                }
+
+            }
+
+            buildInfo.indentLevel++;
+
+            for (var i = 0; i < element.children.length; i++) {
+                var child = element.children[i];
+
+                me._parseInternally(child, buildInfo);
+            }
+            buildInfo.indentLevel--;
+
+            if (isEmptyElement) {
+
+                if (useSelfClosingElement) {
+
+                } else {
+                    var endTag = endTagPrefix + element.tagName + endTagSuffix;
+                    buildInfo.xmlText += endTag;
+                    buildInfo.xmlText += '\n';
+                }
+            } else {
+                var endTag = endTagPrefix + element.tagName + endTagSuffix;
+
+                if (!(elementHasNoChildren && elementHasValueOrChildren)) {
+                    buildInfo.xmlText += indentText;
+                }
+                buildInfo.xmlText += endTag;
+                buildInfo.xmlText += '\n';
+            }
+
+        };
+
+        return XmlBeautify;
+    })();
+
+module.exports = XmlBeautify;
+
+/***/ }),
+
+/***/ "./node_modules/xml-formatter/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/xml-formatter/index.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+function newLine(output) {
+    output.content += '\r\n';
+    var i;
+    for (i = 0; i < output.level; i++) {
+        output.content += output.options.indentation;
+    }
+}
+
+function appendContent(output, content) {
+    output.content += content;
+}
+
+function processNode(node, output, preserveSpace) {
+    if (node.name === '#text' || node.name === '#comment') {
+        processContentNode(node, output, preserveSpace);
+    } else {
+        // Assuming that we only have 3 types of node (#text, #comment and element)
+        processElement(node, output, preserveSpace);
+    }
+}
+
+function processContentNode(node, output, preserveSpace) {
+    if (!preserveSpace && output.content.length > 0) {
+        newLine(output);
+    }
+    appendContent(output, node.content);
+}
+
+function processElement(node, output, preserveSpace) {
+    if (!preserveSpace && output.content.length > 0) {
+        newLine(output);
+    }
+
+    appendContent(output, '<' + node.name);
+    processAttributes(output, node.attributes);
+
+    if (node.children === null) {
+        // self-closing node
+        appendContent(output, '/>');
+    } else {
+
+        appendContent(output, '>');
+
+        output.level++;
+
+        var nodePreserveSpace = node.attributes['xml:space'] === 'preserve';
+
+        if (!nodePreserveSpace && output.options.collapseContent) {
+
+            var containsTextNodes = node.children.some(function(child) {
+                return child.name === '#text';
+            });
+
+            if (containsTextNodes) {
+                nodePreserveSpace = true;
+            }
+        }
+
+        node.children.forEach(function(child) {
+            processNode(child, output, preserveSpace || nodePreserveSpace);
+        });
+
+        output.level--;
+
+        if (!preserveSpace && !nodePreserveSpace) {
+            newLine(output);
+        }
+        appendContent(output, '</' + node.name + '>');
+    }
+}
+
+function processAttributes(output, attributes) {
+    Object.keys(attributes).forEach(function(attr) {
+        appendContent(output, ' ' + attr + '="' + attributes[attr] + '"');
+    });
+}
+
+function processDeclaration(declaration, output) {
+    if (declaration) {
+        appendContent(output, '<?xml');
+        processAttributes(output, declaration.attributes);
+        appendContent(output, '?>');
+    }
+}
+
+
+/**
+ * Converts the given XML into human readable format.
+ *
+ * @param {String} xml
+ * @param {Object} options
+ *  @config {Boolean} [debug=false] displays a tree of the parsed XML before formatting
+ *  @config {String} [indentation='    '] The value used for indentation
+ *  @config {Boolean} [stripComments=false] True to strip the comments
+ *  @config {Boolean} [collapseContent=false] True to keep content in the same line as the element. Only works if element contains at least one text node
+ * @returns {string}
+ */
+function format(xml, options) {
+
+    options = options || {};
+    options.debug = options.debug === true;
+    options.indentation = options.indentation || '    ';
+    options.stripComments = options.stripComments === true;
+    options.collapseContent = options.collapseContent === true;
+
+    var parse = __webpack_require__(/*! xml-parser-xo */ "./node_modules/xml-parser-xo/index.js");
+    var parsedXml = parse(xml, {stripComments: options.stripComments});
+
+    if (options.debug) {
+        var inspect = __webpack_require__(/*! util */ 1).inspect;
+        console.log(inspect(parsedXml, { colors: true, depth: Infinity }));
+    }
+
+    var output = {content: '', level: 0, options: options};
+
+    processDeclaration(parsedXml.declaration, output);
+
+    parsedXml.children.forEach(function(child) {
+        processNode(child, output, false);
+    });
+
+    return output.content;
+}
+
+
+module.exports = format;
+
+
+/***/ }),
+
+/***/ "./node_modules/xml-parser-xo/browserify/debug-mock.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/xml-parser-xo/browserify/debug-mock.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function() {
+    return function debug() {
+        // empty mock of debug module for browser usage
+    };
+};
+
+/***/ }),
+
+/***/ "./node_modules/xml-parser-xo/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/xml-parser-xo/index.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * Module dependencies.
+ */
+
+var debug = __webpack_require__(/*! debug */ "./node_modules/xml-parser-xo/browserify/debug-mock.js")('xml-parser');
+
+/**
+ * Expose `parse`.
+ */
+
+module.exports = parse;
+
+/**
+ * Parse the given string of `xml`.
+ *
+ * @param {String} xml
+ * @param {Object} [options]
+ *  @config {Boolean} [trim=true]
+ *  @config {Boolean} [stripComments=true]
+ * @return {Object}
+ * @api public
+ */
+
+function parse(xml, options) {
+
+  // trim content
+  if (!options || options.trim) {
+    xml = xml.trim();
+  }
+
+  // strip comments
+  if (!options || options.stripComments) {
+    xml = xml.replace(/<!--[\s\S]*?-->/g, '');
+  }
+
+  return document();
+
+  /**
+   * XML document.
+   */
+
+  function document() {
+
+    var decl = declaration();
+    var child;
+    var children = [];
+    var documentRootNode;
+
+    while (child = nextRootChild()) {
+      if (child.name !== '#comment') {
+        if (documentRootNode) {
+          throw new Error('Found multiple root nodes');
+        }
+        documentRootNode = child;
+      }
+      children.push(child);
+    }
+
+    return {
+      declaration: decl,
+      root: documentRootNode,
+      children: children
+    };
+  }
+
+  /**
+   * Declaration.
+   */
+
+  function declaration() {
+    var m = match(/^<\?xml\s*/);
+    if (!m) return;
+
+    // tag
+    var node = {
+      attributes: {}
+    };
+
+    // attributes
+    while (!(eos() || is('?>'))) {
+      var attr = attribute();
+      if (!attr) return node;
+      node.attributes[attr.name] = attr.value;
+    }
+
+    match(/\?>\s*/);
+
+    return node;
+  }
+
+  /**
+   * Tag.
+   */
+
+  function tag() {
+    debug('tag %j', xml);
+    var m = match(/^<([\w-:.]+)\s*/);
+    if (!m) return;
+
+    // name
+    var node = {
+      name: m[1],
+      attributes: {},
+      children: []
+    };
+
+    // attributes
+    while (!(eos() || is('>') || is('?>') || is('/>'))) {
+      var attr = attribute();
+      if (!attr) return node;
+      node.attributes[attr.name] = attr.value;
+    }
+
+    // self closing tag
+    if (match(/^\s*\/>/)) {
+      node.children = null;
+      return node;
+    }
+
+    match(/\??>/);
+
+    // children
+    var child;
+    while (child = nextChild()) {
+      node.children.push(child);
+    }
+
+    // closing
+    match(/^<\/[\w-:.]+>/);
+
+    return node;
+  }
+
+  function nextChild() {
+    return tag() || content() || comment();
+  }
+
+  function nextRootChild() {
+    return tag() || comment();
+  }
+
+  function comment() {
+    var m = match(/^<!--[\s\S]*?-->/);
+    if (m) {
+      return {
+        name: '#comment',
+        content: m[0]
+      };
+    }
+  }
+
+  /**
+   * Text content.
+   */
+
+  function content() {
+    debug('content %j', xml);
+    var m = match(/^([^<]+)/);
+    if (m) {
+      return {
+        name: '#text',
+        content: m[1]
+      };
+    }
+  }
+
+  /**
+   * Attribute.
+   */
+
+  function attribute() {
+    debug('attribute %j', xml);
+    var m = match(/([\w:-]+)\s*=\s*("[^"]*"|'[^']*'|\w+)\s*/);
+    if (!m) return;
+    return { name: m[1], value: strip(m[2]) }
+  }
+
+  /**
+   * Strip quotes from `val`.
+   */
+
+  function strip(val) {
+    return val.replace(/^['"]|['"]$/g, '');
+  }
+
+  /**
+   * Match `re` and advance the string.
+   */
+
+  function match(re) {
+    var m = xml.match(re);
+    if (!m) return;
+    xml = xml.slice(m[0].length);
+    return m;
+  }
+
+  /**
+   * End-of-source.
+   */
+
+  function eos() {
+    return 0 == xml.length;
+  }
+
+  /**
+   * Check for `prefix`.
+   */
+
+  function is(prefix) {
+    return 0 == xml.indexOf(prefix);
+  }
+}
+
+
 /***/ })
 
 }]);
