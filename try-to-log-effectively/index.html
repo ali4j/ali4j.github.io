@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Try to log effectively! - ali4j</title>
+
+  <!-- Edit site and author settings in `_config.yml` to make the social details your own -->
+
+    <meta content="ali4j" property="og:site_name">
+  
+    <meta content="Try to log effectively!" property="og:title">
+  
+  
+    <meta content="article" property="og:type">
+  
+  
+    <meta content="my first post about logging." property="og:description">
+  
+  
+    <meta content="http://localhost/try-to-log-effectively/" property="og:url">
+  
+  
+    <meta content="2016-08-21T13:00:00-07:00" property="article:published_time">
+    <meta content="http://localhost/about/" property="article:author">
+  
+  
+    <meta content="http://localhost/assets/img/log_effectively.jpg" property="og:image">
+  
+  
+    
+  
+  
+    
+    <meta content="log4j" property="article:tag">
+    
+    <meta content="logging" property="article:tag">
+    
+    <meta content="logback" property="article:tag">
+    
+  
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@">
+    <meta name="twitter:creator" content="@ali4jjj">
+  
+    <meta name="twitter:title" content="Try to log effectively!">
+  
+  
+    <meta name="twitter:url" content="http://localhost/try-to-log-effectively/">
+  
+  
+    <meta name="twitter:description" content="my first post about logging.">
+  
+  
+    <meta name="twitter:image:src" content="http://localhost/assets/img/log_effectively.jpg">
+  
+
+	<meta name="description" content="my first post about logging.">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicon/apple-touch-icon-144x144.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#263959">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#263959">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#263959">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <aside class="sidebar">
+  <header>
+    <div class="about">
+      <div class="cover-author-image">
+        <a href="/"><img src="/assets/img/ali-rashidi.jpg" alt="Ali Rashidi"></a>
+      </div>
+      <div class="author-name">Ali Rashidi</div>
+      <p>I am a fullstack developer, currently focusing on vuejs and spring cloud. Always hungry for learning.</p>
+    </div>
+  </header> <!-- End Header -->
+  <footer>
+    <section class="contact">
+      <h3 class="contact-title">Contact me</h3>
+      <ul>
+        
+          <li><a href="https://twitter.com/ali4jjj" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        
+        
+          <li><a href="https://facebook.com/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+        
+        
+          <li class="github"><a href="http://github.com/ali4j" target="_blank"><i class="fa fa-github"></i></a></li>
+        
+        
+          <li class="linkedin"><a href="https://in.linkedin.com/in/rashidiali" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        
+        
+          <li class="email"><a href="mailto:rashidialimail@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+        
+      </ul>
+    </section> <!-- End Section Contact -->
+    <div class="copyright">
+      <p>2019 &copy; Ali Rashidi</p>
+    </div>
+  </footer> <!-- End Footer -->
+</aside> <!-- End Sidebar -->
+<div class="content-box clearfix">
+  <article class="article-page">
+  <div class="page-content">
+    
+    <div class="page-cover-image">
+      <figure>
+        <img class="page-image" src=/assets/img/log_effectively.jpg alt="Try to log effectively!">
+        
+      </figure>
+    </div> <!-- End Page Cover Image -->
+    
+    <div class="wrap-content">
+      <header class="header-page">
+        <h1 class="page-title">Try to log effectively!</h1>
+        <div class="page-date"><span>2016, Aug 21&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+      </header>
+      <p>Logging plays an important role in software development. Actually the main purpose of logging is to monitor what your application is doing, especially when it’s not possible for you to debug it, e.g. production environment. Whenever I encounter a bug or an error in the product I have developed, the only place which I can elicit some information from it, is the log file, so logging appropriately is an essential part of developing.</p>
+
+<p>I’m just going to talk about approaches I take and configurations I use in my development environment.</p>
+
+<h2 id="configurations">Configurations</h2>
+<p>In my current project, I’m using log4j as the logging framework. There are some reasons that I’ve choose it. Actually it’s a mature framework with lots of document, it’s popular and well-known, and also it’s the one that I’m most knowledgeable about.</p>
+
+<ol>
+  <li>Use a meaningful pattern for your logs. You are going to use your log file as a source of runtime information, so you have to get the most out of it, therefore consider these items in your logs:</li>
+</ol>
+
+<ul>
+  <li>Date and Time</li>
+  <li>Thread name</li>
+  <li>Full qualified class name</li>
+  <li>Log message</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-properties" data-lang="properties"><span class="py">log4j.appender.rollingAppender</span><span class="p">=</span><span class="s">org.apache.log4j.DailyRollingFileAppender</span>
+<span class="py">log4j.appender.rollingAppender.File</span><span class="p">=</span><span class="s">path/to/logfile/logfilename.log</span>
+<span class="py">log4j.appender.rollingAppender.layout</span><span class="p">=</span><span class="s">org.apache.log4j.PatternLayout</span>
+<span class="py">log4j.appender.rollingAppender..layout.ConversionPattern</span><span class="p">=</span><span class="s">%d{dd MMM yyyy HH:mm:ss}-%t-%p-%C-%M-%m%n</span></code></pre></figure>
+
+<p>The above lines of log4j configuration results in a log message like the below one:</p>
+
+<p>10 Aug 2016 12:49:37-main-INFO-net.ali4j.log4jtest.TestClass-test-this is the log message</p>
+
+<p>This line of log message is based on the conversion pattern that is used in configuration lines, we can check each part of coversion pattern separately regarding log message. First part of the log message is the date and time of the message which is configured using <code class="highlighter-rouge">%d{dd MMM yyyy HH:mm:ss}</code> and it results <code class="highlighter-rouge">10 Aug 2016 12:49:37</code>. Second part of the message (actually main -INFO)is the result of <code class="highlighter-rouge">%p</code> and it prints the name thread in which the messages in printed the appender and the level if the message. Thirdly, <code class="highlighter-rouge">%C</code> prints the full qulified class name and <code class="highlighter-rouge">%M</code>  prints the method name. Finally, <code class="highlighter-rouge">%m%n</code> prints the log messages and appends a new line character at the end of the message (using <code class="highlighter-rouge">%n</code>).</p>
+
+<ol>
+  <li>
+    <p>Try to break your log file into smaller ones. By using DailyRollingFileAppender class, log4j can create a separate log file for every single day, moreover, the current date is appended at the end of the file name which gives you more control over the logs. As you can see DailyRollingFileAppender class is used as the rollingAppender, similarly FileAppender can be used too but as a result we are going to have only one log file.</p>
+  </li>
+  <li>
+    <p>In addition to the daily file name, you can put a limit on the size of the log file and break your log file based on its size. By adding below line of configuration you can achieve this feature:</p>
+  </li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-properties" data-lang="properties"><span class="py">log4j.rollingAppender.MaxFileSize</span><span class="p">=</span><span class="s">10KB/10MB/10GB</span></code></pre></figure>
+
+<p>The only point you have to notice is that just <code class="highlighter-rouge">DailyRollingFileAppender</code> and <code class="highlighter-rouge">RollingFileAppender</code> classes have this property so you can’t use this configuration for <code class="highlighter-rouge">FileAppender</code> class.</p>
+
+<h2 id="ways-of-logging">Ways of logging</h2>
+<p>The approach you take to log requires special attention, notice that the information you log is going to be used in production environment as a source of data to monitor your application, so keep these tips in mind.</p>
+
+<ol>
+  <li>
+    <p>Use different log levels for logging. There are different log levels in logging frameworks(log4j too) which are used for particular purposes. But these are the most commonly used ones:</p>
+
+    <p>DEBUG&lt;INFO&lt;ERROR</p>
+
+    <p><strong>INFO</strong>: use this level to log changes in the state of the application, for instance, when new user is registered, some transaction has been commited, a record has been added to the database, or anything that has been done successsfully or unsuccessfully.</p>
+
+    <p><strong>DEBUG</strong>: as it’s name shows this level is used for debugging. You can use debug level to log vast range of data such as input and output of methods, thread states, user inputs, incoming requests, outgoing responses, validation states and so on. Generally anything in detail should be logged by using this level.</p>
+
+    <p><strong>ERROR</strong>: this level is most commonly used to log exceptions and some kind of situations that system can not tolerate such as NPE, database unavailability and … . Logs of this levels show that something hazardous has happened and has to be taken care as soon as possible.</p>
+  </li>
+  <li>
+    <p>Remember to use Logging Guards:</p>
+  </li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">    <span class="k">if</span><span class="o">(</span><span class="n">_logger</span><span class="o">.</span><span class="na">isDebugEnabled</span><span class="o">())</span> <span class="n">_logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="err">“</span><span class="n">debug</span> <span class="n">message</span><span class="err">”</span><span class="o">);</span>
+    </code></pre></figure>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Whenever you use debug level to log a message, check if debug level is enabled and then log it. The purpose of this guard is not to prevent log message from being written, 
+actually it’s intended to prevent useless calls to toString() which can be quite expensive.
+</code></pre></div></div>
+
+<p>That’s all about my experience with logging in java. Whenever you decide to use logging in your application(of course you should use) just keep in mind that later you need this information, so try to log effectively!</p>
+
+      <div class="page-footer">
+        <!-- <div class="page-share">
+          <a href="https://twitter.com/intent/tweet?text=Try to log effectively!&url=http://localhost/try-to-log-effectively/" title="Share on Twitter" rel="nofollow" target="_blank">Twitter</a>
+          <a href="https://facebook.com/sharer.php?u=http://localhost/try-to-log-effectively/" title="Share on Facebook" rel="nofollow" target="_blank">Facebook</a>
+          <a href="https://plus.google.com/share?url=http://localhost/try-to-log-effectively/" title="Share on Google+" rel="nofollow" target="_blank">Google+</a>
+        </div> -->
+        <div class="page-tag">
+          
+            <a href="/tags#log4j" class="tag">&#35; log4j</a>
+          
+            <a href="/tags#logging" class="tag">&#35; logging</a>
+          
+            <a href="/tags#logback" class="tag">&#35; logback</a>
+          
+        </div>
+      </div>
+      <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//ali4j.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+    </div> <!-- End Wrap Content -->
+  </div> <!-- End Page Content -->
+</article> <!-- End Article Page -->
+
+</div>
+
+  </div>
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

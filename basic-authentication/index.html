@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Basic Authentication - ali4j</title>
+
+  <!-- Edit site and author settings in `_config.yml` to make the social details your own -->
+
+    <meta content="ali4j" property="og:site_name">
+  
+    <meta content="Basic Authentication" property="og:title">
+  
+  
+    <meta content="article" property="og:type">
+  
+  
+    <meta content="basic authentication in soap web services ." property="og:description">
+  
+  
+    <meta content="http://localhost/basic-authentication/" property="og:url">
+  
+  
+    <meta content="2016-08-25T13:00:00-07:00" property="article:published_time">
+    <meta content="http://localhost/about/" property="article:author">
+  
+  
+    <meta content="http://localhost/assets/img/basic_authentication.jpg" property="og:image">
+  
+  
+    
+  
+  
+    
+    <meta content="java" property="article:tag">
+    
+    <meta content="soap" property="article:tag">
+    
+    <meta content="webservices" property="article:tag">
+    
+    <meta content="basic_authentication" property="article:tag">
+    
+    <meta content="apache cxf" property="article:tag">
+    
+    <meta content="inteceptors" property="article:tag">
+    
+  
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@">
+    <meta name="twitter:creator" content="@ali4jjj">
+  
+    <meta name="twitter:title" content="Basic Authentication">
+  
+  
+    <meta name="twitter:url" content="http://localhost/basic-authentication/">
+  
+  
+    <meta name="twitter:description" content="basic authentication in soap web services .">
+  
+  
+    <meta name="twitter:image:src" content="http://localhost/assets/img/basic_authentication.jpg">
+  
+
+	<meta name="description" content="basic authentication in soap web services .">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicon/apple-touch-icon-144x144.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#263959">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#263959">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#263959">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <aside class="sidebar">
+  <header>
+    <div class="about">
+      <div class="cover-author-image">
+        <a href="/"><img src="/assets/img/ali-rashidi.jpg" alt="Ali Rashidi"></a>
+      </div>
+      <div class="author-name">Ali Rashidi</div>
+      <p>I am a fullstack developer, currently focusing on vuejs and spring cloud. Always hungry for learning.</p>
+    </div>
+  </header> <!-- End Header -->
+  <footer>
+    <section class="contact">
+      <h3 class="contact-title">Contact me</h3>
+      <ul>
+        
+          <li><a href="https://twitter.com/ali4jjj" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        
+        
+          <li><a href="https://facebook.com/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+        
+        
+          <li class="github"><a href="http://github.com/ali4j" target="_blank"><i class="fa fa-github"></i></a></li>
+        
+        
+          <li class="linkedin"><a href="https://in.linkedin.com/in/rashidiali" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        
+        
+          <li class="email"><a href="mailto:rashidialimail@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+        
+      </ul>
+    </section> <!-- End Section Contact -->
+    <div class="copyright">
+      <p>2019 &copy; Ali Rashidi</p>
+    </div>
+  </footer> <!-- End Footer -->
+</aside> <!-- End Sidebar -->
+<div class="content-box clearfix">
+  <article class="article-page">
+  <div class="page-content">
+    
+    <div class="page-cover-image">
+      <figure>
+        <img class="page-image" src=/assets/img/basic_authentication.jpg alt="Basic Authentication">
+        
+      </figure>
+    </div> <!-- End Page Cover Image -->
+    
+    <div class="wrap-content">
+      <header class="header-page">
+        <h1 class="page-title">Basic Authentication</h1>
+        <div class="page-date"><span>2016, Aug 25&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+      </header>
+      <p>Basic Authentication is one of the most-used methods of authentication due to its simplicity and is defined in RFC 7617 specification. 
+In this approach the client sends its USERNAME and PASSWORD as cleartext along side its requests. To be more precise, the Authorization header is added to the list of headers and Base64 encoded value of the provided USERNAME and PASSWORD is added as the value of the header. The exact format of the value of the header is compromised of 3 parts:</p>
+<ol>
+  <li>first part is the Word ‘Basic’</li>
+  <li>then it is followed by a colon ‘:’</li>
+  <li>and the final part is base64 encoded value of USERNAME:PASSWORD</li>
+</ol>
+
+<p>and the final form of the value is something like:
+	Basic bmD9F8SDJFSDKJFSD98FNSDJFMNS0D9FMUSDJKFKSDHNFM8S0DUFNSDJKFH=.</p>
+
+<p>The best practice is Using BA in combination with an external secure system such as TLS. Since user credentials is sent as plain text over the wire it should be encrypted in order to avoid sniffing.</p>
+
+<p>This was a brief introduction about BA, now we can move on to the next step in which this method of authentication is implemented.</p>
+
+<p>BA can be applied on any resource which is exposed to be requested by clients, it can be a static content such as an image or a restful web service which can be used to fetch a record of a database. In this tutorial Im just going to implement BA on a soap web service implemented with apache cxf and a rest web service implemented sing spring boot.</p>
+
+<h3 id="ba-using-apache-cxf">BA using apache cxf</h3>
+<p>Apache cxf is an implementation of both JAX-WS and JAX-RS specifications, this means that you can use it for exposing both soap and rest services, but here it is used just for implementing a soap web service.</p>
+
+<p>Cxf has a utility called <code class="highlighter-rouge">Interceptor</code> which works mostly like servlet filters, with this difference that it can be applied on different phases of processing incoming soap messages, while filters are applied on urls and http requests. Using this utility, it is possible to preprocess received soap messages and check whether the sender is authenticated.</p>
+
+<p>Now we are going to take a look at the interceptor which implemenets a basic security authentiction:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="n">net</span><span class="o">.</span><span class="na">ali4j</span><span class="o">.</span><span class="na">tutorials</span><span class="o">.</span><span class="na">soapbasicauthentication</span><span class="o">;</span> 
+
+<span class="kn">import</span> <span class="nn">org.apache.cxf.interceptor.Fault</span><span class="o">;</span> 
+<span class="kn">import</span> <span class="nn">org.apache.cxf.message.Message</span><span class="o">;</span> 
+<span class="kn">import</span> <span class="nn">org.apache.cxf.phase.AbstractPhaseInterceptor</span><span class="o">;</span> 
+<span class="kn">import</span> <span class="nn">org.apache.cxf.phase.Phase</span><span class="o">;</span> 
+<span class="kn">import</span> <span class="nn">org.apache.cxf.transport.http.AbstractHTTPDestination</span><span class="o">;</span> 
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Component</span><span class="o">;</span> 
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span> 
+<span class="kn">import</span> <span class="nn">java.util.Optional</span><span class="o">;</span> 
+
+<span class="nd">@Component</span> 
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BasicAuthenticationInterceptor</span> <span class="kd">extends</span> <span class="n">AbstractPhaseInterceptor</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="o">{</span> 
+
+   <span class="kd">public</span> <span class="nf">BasicAuthenticationInterceptor</span><span class="o">()</span> <span class="o">{</span> 
+       <span class="kd">super</span><span class="o">(</span><span class="n">Phase</span><span class="o">.</span><span class="na">PRE_INVOKE</span><span class="o">);</span> 
+   <span class="o">}</span> 
+
+   <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">DEFAULT_USERNAME</span> <span class="o">=</span> <span class="s">"username"</span><span class="o">;</span> 
+   <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">DEFAULT_PASSWORD</span> <span class="o">=</span> <span class="s">"password"</span><span class="o">;</span> 
+
+   <span class="nd">@Override</span> 
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handleMessage</span><span class="o">(</span><span class="n">Message</span> <span class="n">message</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Fault</span> <span class="o">{</span> 
+       <span class="n">HttpServletRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="o">(</span><span class="n">HttpServletRequest</span><span class="o">)</span> <span class="n">message</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">AbstractHTTPDestination</span><span class="o">.</span><span class="na">HTTP_REQUEST</span><span class="o">);</span> 
+       <span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">authorizationOptional</span> <span class="o">=</span> 
+               <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getHeader</span><span class="o">(</span><span class="s">"Authorization"</span><span class="o">).</span><span class="na">trim</span><span class="o">()).</span><span class="na">filter</span><span class="o">(</span><span class="n">s</span> <span class="o">-&gt;</span> <span class="o">!</span><span class="n">s</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">());</span> 
+       <span class="k">if</span> <span class="o">(</span><span class="n">authorizationOptional</span><span class="o">.</span><span class="na">isPresent</span><span class="o">())</span>
+           <span class="k">if</span><span class="o">(!</span><span class="n">checkAuthentication</span><span class="o">(</span><span class="n">authorizationOptional</span><span class="o">.</span><span class="na">get</span><span class="o">()))</span> <span class="n">unauthenticated</span><span class="o">();</span> 
+       <span class="k">else</span> <span class="nf">unauthenticated</span><span class="o">();</span> 
+   <span class="o">}</span> 
+
+   <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">checkAuthentication</span><span class="o">(</span><span class="n">String</span> <span class="n">authenticationHeaderValue</span><span class="o">)</span> <span class="o">{</span> 
+       <span class="n">BasicAuthenticationUserCredentials</span> <span class="n">credentials</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BasicAuthenticationUserCredentials</span><span class="o">(</span><span class="n">authenticationHeaderValue</span><span class="o">);</span> 
+       <span class="k">return</span> <span class="n">credentials</span><span class="o">.</span><span class="na">getUsername</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">DEFAULT_USERNAME</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">credentials</span><span class="o">.</span><span class="na">getPassword</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">DEFAULT_PASSWORD</span><span class="o">);</span> 
+   <span class="o">}</span> 
+
+   <span class="kd">private</span> <span class="kt">void</span> <span class="nf">unauthenticated</span><span class="o">()</span> <span class="o">{</span> 
+       <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"invalid credentials"</span><span class="o">);</span> 
+   <span class="o">}</span> 
+
+<span class="o">}</span> </code></pre></figure>
+
+<p>In order to create an interceptor your class has to extend AbstractPhaseInterceptor which is an abstract interceptor provided by cxf and it should override handle method. Inside handle method, Authorization header (which is a http header) should be acquired from the request (which is represented as Message in handle method) so to achieve this, a HttpServletRequest is gotten from the message and using it we can have access to http headers sent by the client.</p>
+
+<p>Next step is to get the value of Authorization header and performing the authentication. Ive created a POJO class named BasicAuthenticationUserCredentials which when instantiating, you should provide the value of authorization header for the constructor and then it exposes the username and password set in heaer.</p>
+
+<p>After BasicAuthenticationUserCredentials instance is created (with proper values), it can be used to authenticate user. Based on your business, authentication process may differ, for exmaple you can check user credentials against a database record or maybe somewhere an authentication api is provide, but here the simplest scenario is choosed and username and password is hardcoded.</p>
+
+<p>Last point which worth mentioning is that, in this example, an unauthorized state is handled with a RuntimeException, again based on your business and scenario it can be changed and a more proper exception handling approach can be employed. 
+A complete example is implemented using spring boot and apache cxf and you can take a look at it in <a href="https://github.com/ali4j/ApacheCXFBasicAuthentication">my github</a>.</p>
+
+
+      <div class="page-footer">
+        <!-- <div class="page-share">
+          <a href="https://twitter.com/intent/tweet?text=Basic Authentication&url=http://localhost/basic-authentication/" title="Share on Twitter" rel="nofollow" target="_blank">Twitter</a>
+          <a href="https://facebook.com/sharer.php?u=http://localhost/basic-authentication/" title="Share on Facebook" rel="nofollow" target="_blank">Facebook</a>
+          <a href="https://plus.google.com/share?url=http://localhost/basic-authentication/" title="Share on Google+" rel="nofollow" target="_blank">Google+</a>
+        </div> -->
+        <div class="page-tag">
+          
+            <a href="/tags#java" class="tag">&#35; java</a>
+          
+            <a href="/tags#soap" class="tag">&#35; soap</a>
+          
+            <a href="/tags#webservices" class="tag">&#35; webservices</a>
+          
+            <a href="/tags#basic_authentication" class="tag">&#35; basic_authentication</a>
+          
+            <a href="/tags#apache cxf" class="tag">&#35; apache cxf</a>
+          
+            <a href="/tags#inteceptors" class="tag">&#35; inteceptors</a>
+          
+        </div>
+      </div>
+      <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//ali4j.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+    </div> <!-- End Wrap Content -->
+  </div> <!-- End Page Content -->
+</article> <!-- End Article Page -->
+
+</div>
+
+  </div>
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>
