@@ -17,14 +17,14 @@
     <meta content="a post about WeakHashMap class." property="og:description">
   
   
-    <meta content="http://localhost/java.util.WeakHashMap/" property="og:url">
+    <meta content="httpa://ali4j.github.com/java.util.WeakHashMap/" property="og:url">
   
   
-    <meta content="2019-09-13T03:00:00-07:00" property="article:published_time">
-    <meta content="http://localhost/about/" property="article:author">
+    <meta content="2019-09-13T13:30:00+03:30" property="article:published_time">
+    <meta content="httpa://ali4j.github.com/about/" property="article:author">
   
   
-    <meta content="http://localhost/assets/img/weakhashmap.jpg" property="og:image">
+    <meta content="httpa://ali4j.github.com/assets/img/weakhashmap.jpg" property="og:image">
   
   
     
@@ -46,13 +46,13 @@
     <meta name="twitter:title" content="java.util.WeakHashMap">
   
   
-    <meta name="twitter:url" content="http://localhost/java.util.WeakHashMap/">
+    <meta name="twitter:url" content="httpa://ali4j.github.com/java.util.WeakHashMap/">
   
   
     <meta name="twitter:description" content="a post about WeakHashMap class.">
   
   
-    <meta name="twitter:image:src" content="http://localhost/assets/img/weakhashmap.jpg">
+    <meta name="twitter:image:src" content="httpa://ali4j.github.com/assets/img/weakhashmap.jpg">
   
 
 	<meta name="description" content="a post about WeakHashMap class.">
@@ -173,14 +173,15 @@ There is a specific method in WeakHashMap class ( expungeStateEntries() ) which 
 <p>With this line of code <code class="highlighter-rouge">x = queue.poll()</code> last item in ReferenceQueue is polled and is checked if it exists in the table of entries and if it exists it will be removed.</p>
 
 <h2 id="weakhashmap-use-case">WeakHashMap use case</h2>
-<p>There are different scenarios in which using a WeakHashMap can be quite useful. For example whenever there is a need for keeping some metadata about an object, (say that an object is received from an api ) they can be put into a WHM and whenever there is no other references to the Object (as the key), the entry will be removed.
+<p>There are different scenarios in which using a WeakHashMap can be quite useful. For example whenever there is a need for keeping some metadata about an object, (say that an object is received from an api and you have no controller over it) they can be put into a WHM and whenever there is no other references to the Object (as the key), the entry will be removed.
+In this way you are coupling the lifecycle of your metadata objects to the source objects.
 An other usage of this class can take place as a cache. Since the entry will be removed from the WHM, this class can be used as an efficient cache infrastructure.</p>
 
       <div class="page-footer">
         <!-- <div class="page-share">
-          <a href="https://twitter.com/intent/tweet?text=java.util.WeakHashMap&url=http://localhost/java.util.WeakHashMap/" title="Share on Twitter" rel="nofollow" target="_blank">Twitter</a>
-          <a href="https://facebook.com/sharer.php?u=http://localhost/java.util.WeakHashMap/" title="Share on Facebook" rel="nofollow" target="_blank">Facebook</a>
-          <a href="https://plus.google.com/share?url=http://localhost/java.util.WeakHashMap/" title="Share on Google+" rel="nofollow" target="_blank">Google+</a>
+          <a href="https://twitter.com/intent/tweet?text=java.util.WeakHashMap&url=httpa://ali4j.github.com/java.util.WeakHashMap/" title="Share on Twitter" rel="nofollow" target="_blank">Twitter</a>
+          <a href="https://facebook.com/sharer.php?u=httpa://ali4j.github.com/java.util.WeakHashMap/" title="Share on Facebook" rel="nofollow" target="_blank">Facebook</a>
+          <a href="https://plus.google.com/share?url=httpa://ali4j.github.com/java.util.WeakHashMap/" title="Share on Google+" rel="nofollow" target="_blank">Google+</a>
         </div> -->
         <div class="page-tag">
           
@@ -199,7 +200,7 @@ An other usage of this class can take place as a cache. Since the entry will be 
     <script>
       (function() {
           var d = document, s = d.createElement('script');
-          s.src = '//ali4j.disqus.com/embed.js';
+          s.src = 'ali4j.disqus.com/embed.js';
           s.setAttribute('data-timestamp', +new Date());
           (d.head || d.body).appendChild(s);
       })();

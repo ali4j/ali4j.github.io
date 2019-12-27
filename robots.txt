@@ -1,1 +1,1 @@
-Sitemap: http://localhost/sitemap.xml
+Sitemap: httpa://ali4j.github.com/sitemap.xml
