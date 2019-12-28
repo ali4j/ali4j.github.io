@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Chain of Responsibility design pattern - ali4j</title>
+
+  <!-- Edit site and author settings in `_config.yml` to make the social details your own -->
+
+    <meta content="ali4j" property="og:site_name">
+  
+    <meta content="Chain of Responsibility design pattern" property="og:title">
+  
+  
+    <meta content="article" property="og:type">
+  
+  
+    <meta content="a simple demonstration of Chain of responsibility pattern." property="og:description">
+  
+  
+    <meta content="httpa://ali4j.github.com/Chain_of_Responsibility_design_pattern/" property="og:url">
+  
+  
+    <meta content="2019-12-28T13:30:00+03:30" property="article:published_time">
+    <meta content="httpa://ali4j.github.com/about/" property="article:author">
+  
+  
+    <meta content="httpa://ali4j.github.com/assets/img/cor_design_pattern.jpg" property="og:image">
+  
+  
+    
+  
+  
+    
+    <meta content="java" property="article:tag">
+    
+    <meta content="java core" property="article:tag">
+    
+    <meta content="design patterns" property="article:tag">
+    
+    <meta content="chain of responsibility" property="article:tag">
+    
+    <meta content="cor" property="article:tag">
+    
+  
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@">
+    <meta name="twitter:creator" content="@ali4jjj">
+  
+    <meta name="twitter:title" content="Chain of Responsibility design pattern">
+  
+  
+    <meta name="twitter:url" content="httpa://ali4j.github.com/Chain_of_Responsibility_design_pattern/">
+  
+  
+    <meta name="twitter:description" content="a simple demonstration of Chain of responsibility pattern.">
+  
+  
+    <meta name="twitter:image:src" content="httpa://ali4j.github.com/assets/img/cor_design_pattern.jpg">
+  
+
+	<meta name="description" content="a simple demonstration of Chain of responsibility pattern.">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicon/apple-touch-icon-144x144.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#263959">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#263959">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#263959">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <aside class="sidebar">
+  <header>
+    <div class="about">
+      <div class="cover-author-image">
+        <a href="/"><img src="/assets/img/ali-rashidi.jpg" alt="Ali Rashidi"></a>
+      </div>
+      <div class="author-name">Ali Rashidi</div>
+      <p>I am a fullstack developer, currently focusing on vuejs and spring cloud. Always hungry for learning.</p>
+    </div>
+  </header> <!-- End Header -->
+  <footer>
+    <section class="contact">
+      <h3 class="contact-title">Contact me</h3>
+      <ul>
+        
+          <li><a href="https://twitter.com/ali4jjj" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        
+        
+          <li><a href="https://facebook.com/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+        
+        
+          <li class="github"><a href="http://github.com/ali4j" target="_blank"><i class="fa fa-github"></i></a></li>
+        
+        
+          <li class="linkedin"><a href="https://in.linkedin.com/in/rashidiali" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        
+        
+          <li class="email"><a href="mailto:rashidialimail@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+        
+      </ul>
+    </section> <!-- End Section Contact -->
+    <div class="copyright">
+      <p>2019 &copy; Ali Rashidi</p>
+    </div>
+  </footer> <!-- End Footer -->
+</aside> <!-- End Sidebar -->
+<div class="content-box clearfix">
+  <article class="article-page">
+  <div class="page-content">
+    
+    <div class="page-cover-image">
+      <figure>
+        <img class="page-image" src=/assets/img/cor_design_pattern.jpg alt="Chain of Responsibility design pattern">
+        
+      </figure>
+    </div> <!-- End Page Cover Image -->
+    
+    <div class="wrap-content">
+      <header class="header-page">
+        <h1 class="page-title">Chain of Responsibility design pattern</h1>
+        <div class="page-date"><span>2019, Dec 28&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+      </header>
+      <p>This is one of the behavioral patterns which comes quite handy. This pattern specifies the way in which components interact with each other and that it is categorized in behavioral patterns.</p>
+
+<p>As the name suggests this patterns is useful when there is a chain of business logic units which should be applied on a piece of data. There are several demonstrations of this pattern which is utilized by many popular frameworks and libraries. For instance, security filter chain in spring security is a clear and awesome implementation of this pattern which applies several security constraints on a request sent from the client.</p>
+
+<p>The general idea of this design pattern is that if the request (or the piece of data which should be processed) is successfully processed by current component of the chain then it should be passed to the next component, otherwise some exception should be thrown or some error-handling policy should be provided.</p>
+
+<p>Here I go through a simple example of this pattern. This sample imitates the security filter chain of spring security in a simple form and tries to process the request throughout a chain of filters.</p>
+
+<p><img src="/assets/img/cor_class_diag.png" alt="chian_of_responsibility_class_diagram" /></p>
+
+<script src="https://gist.github.com/9d39c2927941437562d7d475afd0a3d8.js"> </script>
+
+<p>Based on the class diagram, there is an interface defining a contract which every request handler should implement. It has two methods, setNext(Handler handler) which sets the next handler of the chain and execute(Request request) which performs the business logic.</p>
+
+<script src="https://gist.github.com/77c1480224338d186311984da5bdce19.js"> </script>
+
+<p>AbstractHandler class implements Handler interface and provides an implementation of setNext method. The other method of Handler class is not implemented since it is expected to be implemented by a concrete class.</p>
+
+<p>ValidationHandler, AuthenticationHandler and AuthorizationHandler are the concrete classes which provides specific implementations for execute method of Handler interface. As the name shows, Request instance gets validated in ValidationHandler, the user/client which has sent the request gets authenticated in authentication handler and finally the request gets authorized to check if they have access to the requested resource in AuthorizationHandler.</p>
+
+<script src="https://gist.github.com/848504dc516d0cd8caf7f2156087ee30.js"> </script>
+
+<script src="https://gist.github.com/88444e65baaa26c170c0394b2a357969.js"> </script>
+
+<script src="https://gist.github.com/b464880eaadbf78caa44d96379306a22.js"> </script>
+
+<p>An important point about the handler concrete classes is that their order in the chain can be set in runtime and in our example the first handler is the ValidationHandler, second one is the AuthenticationHandler and last one is AuthorizationHandler.</p>
+
+<p>Finally, there are two value classes, first one is Request class which simulates a http request sent by a client and User class which holds the data of authenticated users, actually it plays the role of a datasource which provides registered users.</p>
+
+<script src="https://gist.github.com/cb2dcac78e1935f73cb5f7086bd8f08a.js"> </script>
+
+<script src="https://gist.github.com/4a2b184d31fcf2ecc51dbdafcbef8653.js"> </script>
+
+<p>The Demo class contains several tests to show how the request is processed by the handlers.</p>
+
+<script src="https://gist.github.com/55ffa6064a0ca2bf47b1d68364794c37.js"> </script>
+
+
+      <div class="page-footer">
+        <!-- <div class="page-share">
+          <a href="https://twitter.com/intent/tweet?text=Chain of Responsibility design pattern&url=httpa://ali4j.github.com/Chain_of_Responsibility_design_pattern/" title="Share on Twitter" rel="nofollow" target="_blank">Twitter</a>
+          <a href="https://facebook.com/sharer.php?u=httpa://ali4j.github.com/Chain_of_Responsibility_design_pattern/" title="Share on Facebook" rel="nofollow" target="_blank">Facebook</a>
+          <a href="https://plus.google.com/share?url=httpa://ali4j.github.com/Chain_of_Responsibility_design_pattern/" title="Share on Google+" rel="nofollow" target="_blank">Google+</a>
+        </div> -->
+        <div class="page-tag">
+          
+            <a href="/tags#java" class="tag">&#35; java</a>
+          
+            <a href="/tags#java core" class="tag">&#35; java core</a>
+          
+            <a href="/tags#design patterns" class="tag">&#35; design patterns</a>
+          
+            <a href="/tags#chain of responsibility" class="tag">&#35; chain of responsibility</a>
+          
+            <a href="/tags#cor" class="tag">&#35; cor</a>
+          
+        </div>
+      </div>
+      <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = 'ali4j.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+    </div> <!-- End Wrap Content -->
+  </div> <!-- End Page Content -->
+</article> <!-- End Article Page -->
+
+</div>
+
+  </div>
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>
