@@ -1,0 +1,54 @@
+---
+layout: post
+title: "java.util.WeakHashMap"
+date: 2019-09-13 14:00:00 +0400
+description: a post about WeakHashMap class. # Add post description (optional)
+img: weakhashmap.jpg # Add image post (optional)
+tags: [java,java core, WeakHashMap]
+
+---
+In this post I’m gonna discuss this implementation of Map interface and talk about some of it features and specifications.
+
+## WeakHashMap a general view
+WeakHashMap is a unique implementation of Map and it’s most important difference in comparison with other implementations is key objects of this class are weak referenced and whenever there is no other references to them (except the one in the map) they will be collected by GC in the next cycle and therefore the entry will be deleted from the map automatically. In case other implementations of map is used (such as HM), entries should be traversed and the one which no longer makes sense should be removed manually.
+
+## WeakHashMap in details
+The important question is how the entry with null key is removed automatically?
+There is a specific method in WeakHashMap class ( expungeStateEntries() ) which removes any entry which its corresponding key is put into ReferenceQueue and this method is called whenever an entry is put or removed from the map (to be more precise there is getTable() method which returns the array of entries and expungeStateEntries is called in it).
+
+Here is the code of  expungeStateEntries() method:
+
+{% highlight JAVA %}
+private void expungeStaleEntries() {
+	for (Object x; (x = queue.poll()) != null; ) {
+		synchronized (queue) {
+			@SuppressWarnings("unchecked")
+				Entry<K,V> e = (Entry<K,V>) x;
+			int i = indexFor(e.hash, table.length);
+			Entry<K,V> prev = table[i];
+			Entry<K,V> p = prev;
+			while (p != null) {
+				Entry<K,V> next = p.next;
+				if (p == e) {
+					if (prev == e)
+						table[i] = next;
+					else
+						prev.next = next;
+					e.value = null; // Help GC
+					size--;
+					break;
+				}
+				prev = p;
+				p = next;
+			}
+		}
+	}
+}
+{% endhighlight %}
+
+With this line of code `x = queue.poll()` last item in ReferenceQueue is polled and is checked if it exists in the table of entries and if it exists it will be removed. 
+
+## WeakHashMap use case
+There are different scenarios in which using a WeakHashMap can be quite useful. For example whenever there is a need for keeping some metadata about an object, (say that an object is received from an api and you have no controller over it) they can be put into a WHM and whenever there is no other references to the Object (as the key), the entry will be removed.
+In this way you are coupling the lifecycle of your metadata objects to the source objects.
+An other usage of this class can take place as a cache. Since the entry will be removed from the WHM, this class can be used as an efficient cache infrastructure.
