@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Prerequisites of Kubernetes - ali4j</title>
+
+  <!-- Edit site and author settings in `_config.yml` to make the social details your own -->
+
+    <meta content="ali4j" property="og:site_name">
+  
+    <meta content="Prerequisites of Kubernetes" property="og:title">
+  
+  
+    <meta content="article" property="og:type">
+  
+  
+    <meta content="some required concepts about containerization." property="og:description">
+  
+  
+    <meta content="httpa://ali4j.github.com/Prerequisites_of_Kubernetes/" property="og:url">
+  
+  
+    <meta content="2020-03-24T18:30:00+03:30" property="article:published_time">
+    <meta content="httpa://ali4j.github.com/about/" property="article:author">
+  
+  
+    <meta content="httpa://ali4j.github.com/assets/img/prerequisites_of_kubernetes.jpg" property="og:image">
+  
+  
+    
+  
+  
+    
+    <meta content="docker" property="article:tag">
+    
+    <meta content="kubernetes" property="article:tag">
+    
+    <meta content="k8s" property="article:tag">
+    
+    <meta content="container" property="article:tag">
+    
+    <meta content="image" property="article:tag">
+    
+  
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@">
+    <meta name="twitter:creator" content="@ali4jjj">
+  
+    <meta name="twitter:title" content="Prerequisites of Kubernetes">
+  
+  
+    <meta name="twitter:url" content="httpa://ali4j.github.com/Prerequisites_of_Kubernetes/">
+  
+  
+    <meta name="twitter:description" content="some required concepts about containerization.">
+  
+  
+    <meta name="twitter:image:src" content="httpa://ali4j.github.com/assets/img/prerequisites_of_kubernetes.jpg">
+  
+
+	<meta name="description" content="some required concepts about containerization.">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicon/apple-touch-icon-144x144.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#263959">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#263959">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#263959">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <aside class="sidebar">
+  <header>
+    <div class="about">
+      <div class="cover-author-image">
+        <a href="/"><img src="/assets/img/ali-rashidi.jpg" alt="Ali Rashidi"></a>
+      </div>
+      <div class="author-name">Ali Rashidi</div>
+      <p>I am a fullstack developer, currently focusing on vuejs and spring cloud. Always hungry for learning.</p>
+    </div>
+  </header> <!-- End Header -->
+  <footer>
+    <section class="contact">
+      <h3 class="contact-title">Contact me</h3>
+      <ul>
+        
+          <li><a href="https://twitter.com/ali4jjj" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        
+        
+          <li><a href="https://facebook.com/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+        
+        
+          <li class="github"><a href="http://github.com/ali4j" target="_blank"><i class="fa fa-github"></i></a></li>
+        
+        
+          <li class="linkedin"><a href="https://in.linkedin.com/in/rashidiali" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        
+        
+          <li class="email"><a href="mailto:rashidialimail@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+        
+      </ul>
+    </section> <!-- End Section Contact -->
+    <div class="copyright">
+      <p>2020 &copy; Ali Rashidi</p>
+    </div>
+  </footer> <!-- End Footer -->
+</aside> <!-- End Sidebar -->
+<div class="content-box clearfix">
+  <article class="article-page">
+  <div class="page-content">
+    
+    <div class="page-cover-image">
+      <figure>
+        <img class="page-image" src=/assets/img/prerequisites_of_kubernetes.jpg alt="Prerequisites of Kubernetes">
+        
+      </figure>
+    </div> <!-- End Page Cover Image -->
+    
+    <div class="wrap-content">
+      <header class="header-page">
+        <h1 class="page-title">Prerequisites of Kubernetes</h1>
+        <div class="page-date"><span>2020, Mar 24&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+      </header>
+      <p>Kubernetes aka k8s is an open source system developed by google and it is the most famous containers orchestration tool in the industry at the moment. Before getting into it, it’s a better idea to take a look at containers.</p>
+
+<h2 id="containers">Containers</h2>
+
+<h3 id="the-need-for-containers">The need for containers</h3>
+<p>There are software systems which are consist of several different components, for example consider an application which uses redis as messaging infrastructure, mongodb as database, nignx as web server and nodejs as backend technology.</p>
+
+<p><img src="/assets/img/technology_stack_image.jpg" alt="technology_stack_image" /></p>
+
+<p>The compatibility of these products should be checked with the OS which based on it the software system is going to be deployed. Also the problem gets more confusing when different operating systems are used in different environments (for instance, windows is used in development environment and linux is used in production).</p>
+
+<p>In addition to the above problem, the compatibility of these products should be checked against the libraries and dependencies on the OS. Different services require different libraries which different versions. This issue makes the problem more complicated.
+Also during time new versions of services and components are released by their vendors and it is required to upgrade existing ones. During the upgrading process we have to go trough above mentioned problems and it makes it a quite tedious and time-consuming job. These compatibility issue problems are called the matrix from hell.</p>
+
+<p>Finally whenever a new developer joins the team, considering the components and services used in the project, setting up the development environment sounds quite challenging and definitely he/she will have a hard time setting up the dev environment. This is another reason which makes the usage of containers a must.</p>
+
+<h3 id="the-magic">The Magic</h3>
+
+<p>There should be some thing which addresses the problem of compatibility, some kind of tool which makes it possible to change components and services without affecting other ones. Docker is the platform which is able to handle these issues easily. Docker makes its possible to run each component and all of its libraries and dependencies inside a separate environment called container. There should only be a docker configuration file and every developer by building this file is capable of setting up the dev environment fast and easy and the only requirement in this scenario is that docker engine should be installed.</p>
+
+<h3 id="containers-the-real-magic">Containers, The real Magic</h3>
+
+<p>Containers are isolated environments which can have their own processes, mounts, network interfaces and … The only (and the most important) difference between containers and virtual machines is that they share the kernel of the host operating system, while in virtualization each virtual machine has its own fully-fledged OS.</p>
+
+<p>Operating systems are consists of two parts. First is the kernel and the second one is the utility softwares. For example, there are several linux distros and the fact about them is that they share the same kernel (the linux kernel) and they only differ in utility softwares. The kernel is responsible for talking to the underlying hardware and utility softwares are based on the kernel.</p>
+
+<p><img src="/assets/img/OSs.jpg" alt="docker_os_image" /></p>
+
+<p>As it is mentioned, containers share the kernel of the host OS.  It means that containers only have utility softwares and they use the kernel of the host OS. From these reason the type of the containers and the host OS should be the same. For example, when docker engine is installed on top of ubuntu, it is not possible to have a windows container and they should be based on linux containers such as centos, fedora and etc.</p>
+
+<p><img src="/assets/img/tech_stack_on_docker_image.png" alt="tech_stack_on_docker_image" /></p>
+
+<p>This is not considered as a pitfall since the main idea behind docker is running containers as separated environments while sharing the kernel of the host operating system, and it is due to this fact that containerization sometimes is referred to as light virtualization.</p>
+
+<h3 id="containers-vs-virtual-machines">Containers VS Virtual Machines</h3>
+
+<p>The main differences between these two technologies are listed below:</p>
+
+<ul>
+  <li>
+    <p>Containers use host OS kernel, while vms have their own operating machines, due to this overhead vms consume resources remarkably more than containers.</p>
+  </li>
+  <li>
+    <p>Also vms are larger than containers in size, they take gigabytes of disk while containers size are in megabytes.</p>
+  </li>
+  <li>
+    <p>In addition, the boot up speed in containers is faster than vms, since vms should start up an entire OS.</p>
+  </li>
+  <li>
+    <p>Finally, because vms are isolated from the host OS, they are capable of running every kind of operating system regardless of the host OS, while containers should be the same as host OS.</p>
+  </li>
+</ul>
+
+<h3 id="how-the-magic-happens">How the magic happens?</h3>
+
+<p>Almost all of the software vendors have containerized they products and made them publicly available. They share the image of their products using docker registry (or docker hub) and with just executing a single command a developer can run an instance of that product on their machine. For example by executing <code class="highlighter-rouge">docker run tomcat</code> an instance of apache tomcat will be running on docker. Also by executing the command again another instance will be running on docker and it makes clustering quite easy. There are tools for handling such cases and they are going to be discussed in next paragraphs.</p>
+
+<h3 id="containers-vs-images">Containers VS Images</h3>
+
+<p>Image is a template which is used to create one or more containers. Containers are running instances of images and several containers can be built by one image. As it is said there are official images of software products publicly available but in cases when desired images are not available it is possible to create custom images. For example, a developer can create their own image of the application they are working on and by sharing them which devops guys makes it possible for them to run the application easily.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>In this article we scratched the basics of containerization. This article can be considered as an overview of docker which is required for containerization orchestration.
+In next article we will take a look at  containerization orchestration basics.</p>
+
+      <div class="page-footer">
+        <!-- <div class="page-share">
+          <a href="https://twitter.com/intent/tweet?text=Prerequisites of Kubernetes&url=httpa://ali4j.github.com/Prerequisites_of_Kubernetes/" title="Share on Twitter" rel="nofollow" target="_blank">Twitter</a>
+          <a href="https://facebook.com/sharer.php?u=httpa://ali4j.github.com/Prerequisites_of_Kubernetes/" title="Share on Facebook" rel="nofollow" target="_blank">Facebook</a>
+          <a href="https://plus.google.com/share?url=httpa://ali4j.github.com/Prerequisites_of_Kubernetes/" title="Share on Google+" rel="nofollow" target="_blank">Google+</a>
+        </div> -->
+        <div class="page-tag">
+          
+            <a href="/tags#docker" class="tag">&#35; docker</a>
+          
+            <a href="/tags#kubernetes" class="tag">&#35; kubernetes</a>
+          
+            <a href="/tags#k8s" class="tag">&#35; k8s</a>
+          
+            <a href="/tags#container" class="tag">&#35; container</a>
+          
+            <a href="/tags#image" class="tag">&#35; image</a>
+          
+        </div>
+      </div>
+      <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = 'ali4j.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+    </div> <!-- End Wrap Content -->
+  </div> <!-- End Page Content -->
+</article> <!-- End Article Page -->
+
+</div>
+
+  </div>
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>
